@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:fb="https://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
+<head>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'GA ID HERE']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+	<title></title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+	<meta property="og:title" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content=""/>
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:description" content=""/>
+    <meta property="fb:app_id" content="" />
+    <meta property="og:locale" content="en_US" />
+    <link rel='next' title='' href='' /> 
+    <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="image_src" type="image/png" href="" /> 
+	<link rel="stylesheet" media="all" type="text/css" href="/css/reset.css">
+	<link rel="stylesheet" media="all" type="text/css" href="/css/jquery-ui-1.8.16.custom.css">
+    <link rel="apple-touch-icon-precomposed" href="">
+	<script type="text/javascript" src="/js/text_twist.js"></script>
+</head>
+<body>
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : 'YOUR_APP_ID', 
+      channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', 
+      status     : true, 
+      cookie     : true, 
+      xfbml      : true,  
+	  frictionlessRequests : true
+    });
+	 FB.getLoginStatus(function(response){
+        //runFbInitCriticalCode(); 
+    });
+  };
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+</script>
+
+</body>
+</html>
