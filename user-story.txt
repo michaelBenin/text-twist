@@ -1,0 +1,18 @@
+http://games.yahoo.com/console/tx
+
+Application needs to be able to process Multiple Sets of letters from server
+
+Which set is shown will not be random, it will be strict
+so if time permitting the user can play a friend with the same set
+
+random ordering of letters + reshuffle letters functionality 
+
+Keyboard input and autofocus
+
+display progress / display empty letters
+
+time limit countdown (or a timer of how long it took)
+
+game reset button that should use the same letter set, shuffle the letters and clear progress and timer
+
+new letter set button to remove current set and utilize the next set
