@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:fb="https://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
 <head>
-<link href="/css/style.css" type="text/css" rel="stylesheet" />
-<link href="/css/tablet.css" rel="stylesheet" type="text/css" media="all and (min-width: 481px) and (max-width: 768px)" />
-<link href="/css/mobile.css" rel="stylesheet" type="text/css" media="all and (min-width: 0px) and (max-width: 480px)" />
-<script type="text/javascript" src="/js/text_twist.js"></script>
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<link href="css/tablet.css" rel="stylesheet" type="text/css" media="all and (min-width: 481px) and (max-width: 768px)" />
+	<link href="css/mobile.css" rel="stylesheet" type="text/css" media="all and (min-width: 0px) and (max-width: 480px)" />
+	<script type="text/javascript" src="js/text_twist.js"></script>
 	<title></title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -18,13 +18,26 @@
     <meta property="fb:app_id" content="" />
     <meta property="og:locale" content="en_US" />
     <link rel='next' title='' href='' /> 
-    <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
-    <link rel="image_src" type="image/png" href="" /> 
-	<link rel="stylesheet" media="all" type="text/css" href="/css/reset.css">
-	<link rel="stylesheet" media="all" type="text/css" href="/css/jquery-ui-1.8.16.custom.css">
-    <link rel="apple-touch-icon-precomposed" href="">
+    <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="image_src" type="image/png" href="" /> 	
+    <link rel="apple-touch-icon-precomposed" href="" />
 </head>
-<body>
+<body id="startmenu">
 <div id="fb-root"></div>
+<div id="menu">
+	<h1>Rearrange the letters to make as many words as you can!</h1>
+	<button id="start">Start the Game!!!</button>
+</div>
+<div id="game">
+	<div id="words"></div>
+    <div id="answer"></div>
+    <div id="letters"></div>
+    <button id="twist">Twist</button>
+    <button id="enter">Enter</button>
+    <button id="lastw">Last Word</button>
+	<p>Time:<span id="time"></span></p>
+	<p>Score:<span id="score"></span></p>
+    <p id="nword">Sorry that's not one of the words :(</p>
+</div>
 </body>
 </html>

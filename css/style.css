@@ -16,3 +16,23 @@ body {
 font-family: Open Sans;
 }
 
+#startmenu #menu{
+	display:block;	
+}
+
+#startmenu #game{
+	display:none;	
+}
+
+#startgame #menu{
+	display:none;
+}
+
+#startgame #game{
+	display: block;	
+}
+
+#nword{
+	display: none;	
+}
+
