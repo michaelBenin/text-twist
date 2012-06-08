@@ -8,24 +8,26 @@ var TextTwist = (function(w, d)
 {
 	
 /* 	Constructor */
-	function Game()
+	function Game(s)
 		{
 			/* 	Initialize Variables */
 			var game = this;
 			this.wordmap = gMap();
-			this.set = 0; 
-			this.letters = this.wordmap.response[this.set].letters;
+			this.set = s;
+			this.letters = getOriginal(this.wordmap.response[this.set].letters);
 			this.words =  this.wordmap.response[this.set].words;
 			this.currentAnswer = []; 
+			this.score = 0,
 			this.timer = 120;
 			
-			d.addEventListener('keydown', function(e)
+			this.keydown = d.addEventListener('keydown', function(e)
 			{
 				var k = e.keyCode;
 				
 				if(k === 13)
 				{
-					submitAnswer();	
+					alert("enter key fired");
+					submitAnswer.call(game, game.currentAnswer.join(''));	
 				}
 				else if (game.letters.indexOf(keys[k]) !== -1)
 				{
@@ -33,8 +35,8 @@ var TextTwist = (function(w, d)
 					addToAnswer.call(game, keys[k]);
 					removeLetter.call(game, index);
 					
-					alert("Letters left: "+game.letters.join(''));
-					alert("Current Answer: " +game.currentAnswer.join(''));
+					//alert("Letters left: "+game.letters.join(''));
+					//alert("Current Answer: " +game.currentAnswer.join(''));
 					
 				}
 			});
@@ -71,14 +73,20 @@ var TextTwist = (function(w, d)
 
 /* Private Methods */
 //map these functions	
-	function submitAnswer(a)
+	function submitAnswer()
 	{
-		//check against words	
-	}
-	
-	function clearAnswer()
-	{
-		this.currentAnswer = [];
+		alert("submit answer function fired");
+		var index = this.words.indexOf(this.currentAnswer.join(''));
+		if (index !== -1)
+		{
+			alert("Correct Answer: "+this.currentAnswer.join(''));
+			this.words.splice(index, 1);
+			this.letters = getOriginal(this.wordmap.response[this.set].letters);
+			alert(this.words.join(','));
+			alert(this.letters.join(','));
+			this.currentAnswer = [];
+		}
+		
 	}
 	
 	function addToAnswer(l)
@@ -89,6 +97,30 @@ var TextTwist = (function(w, d)
 	function removeLetter(l)
 	{
 		this.letters.splice(l, 1);	
+	}
+	
+	function resetLetters()
+	{
+		var currentWords = this.words;
+		this.currentAnswer = [];
+		this.wordmap = gmap();
+		this.words = currentWords;
+	}
+	
+	function endGame(g)
+	{
+		g = {};	
+	}
+	
+	function getOriginal(a)
+	{
+		var arr = [];
+		for (i in a)
+		{	
+			arr.push(a[i]);
+		}
+		
+		return arr;
 	}
 	
 	function gMap()
@@ -144,7 +176,7 @@ var TextTwist = (function(w, d)
 						response:
 						[{
 							letters:['M', 'O', 'P', 'E', 'D', 'R'], 
-							words:["", ""]
+							words:['MOP', 'PRE', 'REP', 'MOPE', 'DOPE', 'ROPE', 'DROP', 'PROD', 'DEMO', 'MORE', 'MOPED', 'PEDRO', 'ROMPED']
 						},
 						{
 							letters:['M', 'O', 'P', 'E', 'D', 'R'], 
@@ -176,7 +208,7 @@ var TextTwist = (function(w, d)
 		start.addEventListener('click', function(e)
 		{
 			body.id = "startgame";
-			var startGame = new Game();
+			var startGame = new Game(0);
 		});		
 	});
 	
