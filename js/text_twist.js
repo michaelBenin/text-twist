@@ -7,7 +7,7 @@ Michael Benin 2012
 var TextTwist = (function(w, d)
 {
 /* 	Initialize Variables */
-	var wordmap = gMap(), timer = 120;
+	var wordmap = gMap(), set = 0, currentAnswer = [], timer = 120;
 	
 	w.addEventListener('load', function(e)
 	{
@@ -26,7 +26,71 @@ var TextTwist = (function(w, d)
 		start.addEventListener('click', function(e)
 		{
 			body.id = "startgame";
+			var startGame = new Game(set);
 		});
+		
+		function Game(word)
+		{
+			d.addEventListener('keydown', function(e)
+			{
+				var k = e.keyCode;
+				
+				if (keys[k])
+				{
+					for(l in wordmap.response[set].letters)
+					{
+						if(keys[k] === wordmap.response[set].letters[l])
+						{
+							var inanswer = false;
+							for(i in currentAnswer)
+							{
+								if (keys[k] === currentAnswer[i])
+								{
+									var inanswer = true;	
+								}
+							}
+							
+							if(inanswer === false)
+							{
+								currentAnswer.push(keys[k]);
+								var finalAnswer = currentAnswer.join('');
+								alert(finalAnswer);
+							}
+						}
+					}
+					
+				}
+			});
+		}
+		
+		var keys = {
+			65:'A',
+			66:'B',
+			67:'C',
+			68:'D',
+			69:'E',
+			70:'F',
+			71:'G',
+			72:'H',
+			73:'I',
+			74:'J',
+			75:'K',
+			76:'L',
+			77:'M',
+			78:'N',
+			79:'O',
+			80:'P',
+			81:'Q',
+			82:'R',
+			83:'S',
+			84:'T',
+			85:'U',
+			86:'V',
+			87:'W',
+			88:'X',
+			89:'Y',
+			90:'Z'
+		};
 	});
 
 /* Private Methods */	
@@ -87,11 +151,11 @@ var TextTwist = (function(w, d)
 					{
 						response:
 						[{
-							letters:["m", "o", "p", "e", "d", "r"], 
+							letters:['M', 'O', 'P', 'E', 'D', 'R'], 
 							words:["", ""]
 						},
 						{
-							letters:["m", "o", "p", "e", "d", "r"], 
+							letters:['M', 'O', 'P', 'E', 'D', 'R'], 
 							words:["", ""]	
 						}]
 					};
