@@ -99,13 +99,6 @@ var TextTwist = (function(w, d)
 		this.letters.splice(l, 1);	
 	}
 	
-	function resetLetters()
-	{
-		var currentWords = this.words;
-		this.currentAnswer = [];
-		this.wordmap = gmap();
-		this.words = currentWords;
-	}
 	
 	function endGame(g)
 	{
@@ -119,7 +112,6 @@ var TextTwist = (function(w, d)
 		{	
 			arr.push(a[i]);
 		}
-		
 		return arr;
 	}
 	
