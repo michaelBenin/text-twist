@@ -34,9 +34,17 @@ var TextTwist = (function(w, d)
 			d.addEventListener('keydown', function(e)
 			{
 				var k = e.keyCode;
-				
-				if (keys[k])
+				var letters = wordmap.response[set].letters;
+				if (wordmap.response[set].letters.indexOf(keys[k]) !== -1)
 				{
+					var index = wordmap.response[set].letters.indexOf(keys[k]);
+					currentAnswer.push(keys[k]);
+					letters.splice(index, 1);
+					alert("Letters left: "+letters.join(''));
+					alert("Current Answer: " +currentAnswer.join(''));
+					
+				}
+				/*
 					for(l in wordmap.response[set].letters)
 					{
 						if(keys[k] === wordmap.response[set].letters[l])
@@ -60,6 +68,7 @@ var TextTwist = (function(w, d)
 					}
 					
 				}
+				*/
 			});
 		}
 		
