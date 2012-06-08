@@ -6,13 +6,6 @@ Michael Benin 2012
 /* 	Begin App */
 var TextTwist = (function(w, d)
 {
-/* 	Initialize Variables */
-	var wordmap = gMap(),
-	set = 0, 
-	letters = wordmap.response[set].letters,
-	words =  wordmap.response[set].words,
-	currentAnswer = [], 
-	timer = 120;
 	
 	w.addEventListener('load', function(e)
 	{
@@ -31,11 +24,20 @@ var TextTwist = (function(w, d)
 		start.addEventListener('click', function(e)
 		{
 			body.id = "startgame";
-			var startGame = new Game(set);
+			var startGame = new Game();
 		});
 		
 		function Game()
 		{
+			/* 	Initialize Variables */
+			var game = this;
+			this.wordmap = gMap();
+			this.set = 0; 
+			this.letters = this.wordmap.response[this.set].letters;
+			this.words =  this.wordmap.response[this.set].words;
+			this.currentAnswer = []; 
+			this.timer = 120;
+			
 			d.addEventListener('keydown', function(e)
 			{
 				var k = e.keyCode;
@@ -44,14 +46,14 @@ var TextTwist = (function(w, d)
 				{
 					submitAnswer();	
 				}
-				else if (letters.indexOf(keys[k]) !== -1)
+				else if (game.letters.indexOf(keys[k]) !== -1)
 				{
-					var index = letters.indexOf(keys[k]);
-					addToAnswer(keys[k]);
-					removeLetter(index);
+					var index = game.letters.indexOf(keys[k]);
+					addToAnswer.call(game, keys[k]);
+					removeLetter.call(game, index);
 					
-					alert("Letters left: "+letters.join(''));
-					alert("Current Answer: " +currentAnswer.join(''));
+					alert("Letters left: "+game.letters.join(''));
+					alert("Current Answer: " +game.currentAnswer.join(''));
 					
 				}
 			});
@@ -96,17 +98,17 @@ var TextTwist = (function(w, d)
 	
 	function clearAnswer()
 	{
-		currentAnswer = [];
+		this.currentAnswer = [];
 	}
 	
 	function addToAnswer(l)
 	{
-		currentAnswer.push(l);
+		this.currentAnswer.push(l);
 	}
 	
 	function removeLetter(l)
 	{
-		letters.splice(l, 1);	
+		this.letters.splice(l, 1);	
 	}
 	
 	function gMap()
