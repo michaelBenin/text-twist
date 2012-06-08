@@ -7,7 +7,12 @@ Michael Benin 2012
 var TextTwist = (function(w, d)
 {
 /* 	Initialize Variables */
-	var wordmap = gMap(), set = 0, currentAnswer = [], timer = 120;
+	var wordmap = gMap(),
+	set = 0, 
+	letters = wordmap.response[set].letters,
+	words =  wordmap.response[set].words,
+	currentAnswer = [], 
+	timer = 120;
 	
 	w.addEventListener('load', function(e)
 	{
@@ -19,7 +24,7 @@ var TextTwist = (function(w, d)
 		twist = gId('twist'),
 		enter = gId('enter'),
 		lastw = gId('lastw'),
-		letters = gId('letters'),
+		lettersContainer = gId('letters'),
 		time = gId('time'),
 		score = gId('score');
 		
@@ -29,46 +34,26 @@ var TextTwist = (function(w, d)
 			var startGame = new Game(set);
 		});
 		
-		function Game(word)
+		function Game()
 		{
 			d.addEventListener('keydown', function(e)
 			{
 				var k = e.keyCode;
-				var letters = wordmap.response[set].letters;
-				if (wordmap.response[set].letters.indexOf(keys[k]) !== -1)
+				
+				if(k === 13)
 				{
-					var index = wordmap.response[set].letters.indexOf(keys[k]);
-					currentAnswer.push(keys[k]);
-					letters.splice(index, 1);
+					submitAnswer();	
+				}
+				else if (letters.indexOf(keys[k]) !== -1)
+				{
+					var index = letters.indexOf(keys[k]);
+					addToAnswer(keys[k]);
+					removeLetter(index);
+					
 					alert("Letters left: "+letters.join(''));
 					alert("Current Answer: " +currentAnswer.join(''));
 					
 				}
-				/*
-					for(l in wordmap.response[set].letters)
-					{
-						if(keys[k] === wordmap.response[set].letters[l])
-						{
-							var inanswer = false;
-							for(i in currentAnswer)
-							{
-								if (keys[k] === currentAnswer[i])
-								{
-									var inanswer = true;	
-								}
-							}
-							
-							if(inanswer === false)
-							{
-								currentAnswer.push(keys[k]);
-								var finalAnswer = currentAnswer.join('');
-								alert(finalAnswer);
-							}
-						}
-					}
-					
-				}
-				*/
 			});
 		}
 		
@@ -102,10 +87,26 @@ var TextTwist = (function(w, d)
 		};
 	});
 
-/* Private Methods */	
-	function gId(id)
+/* Private Methods */
+//map these functions	
+	function submitAnswer(a)
 	{
-		return d.getElementById(id);	
+		//check against words	
+	}
+	
+	function clearAnswer()
+	{
+		currentAnswer = [];
+	}
+	
+	function addToAnswer(l)
+	{
+		currentAnswer.push(l);
+	}
+	
+	function removeLetter(l)
+	{
+		letters.splice(l, 1);	
 	}
 	
 	function gMap()
@@ -168,6 +169,11 @@ var TextTwist = (function(w, d)
 							words:["", ""]	
 						}]
 					};
+	}
+	
+	function gId(id)
+	{
+		return d.getElementById(id);	
 	}
 	
 	
