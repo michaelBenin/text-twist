@@ -7,27 +7,8 @@ Michael Benin 2012
 var TextTwist = (function(w, d)
 {
 	
-	w.addEventListener('load', function(e)
-	{
-		var body = d.getElementsByTagName('body')[0],
-		start = gId('start'),
-		menu = gId('menu'),
-		words = gId('words'),
-		answer = gId('answer'),
-		twist = gId('twist'),
-		enter = gId('enter'),
-		lastw = gId('lastw'),
-		lettersContainer = gId('letters'),
-		time = gId('time'),
-		score = gId('score');
-		
-		start.addEventListener('click', function(e)
-		{
-			body.id = "startgame";
-			var startGame = new Game();
-		});
-		
-		function Game()
+/* 	Constructor */
+	function Game()
 		{
 			/* 	Initialize Variables */
 			var game = this;
@@ -87,7 +68,6 @@ var TextTwist = (function(w, d)
 			89:'Y',
 			90:'Z'
 		};
-	});
 
 /* Private Methods */
 //map these functions	
@@ -177,6 +157,28 @@ var TextTwist = (function(w, d)
 	{
 		return d.getElementById(id);	
 	}
+
+/* Initialize App */
+	w.addEventListener('load', function(e)
+	{
+		var body = d.getElementsByTagName('body')[0],
+		start = gId('start'),
+		menu = gId('menu'),
+		words = gId('words'),
+		answer = gId('answer'),
+		twist = gId('twist'),
+		enter = gId('enter'),
+		lastw = gId('lastw'),
+		lettersContainer = gId('letters'),
+		time = gId('time'),
+		score = gId('score');
+		
+		start.addEventListener('click', function(e)
+		{
+			body.id = "startgame";
+			var startGame = new Game();
+		});		
+	});
 	
 	
 	
