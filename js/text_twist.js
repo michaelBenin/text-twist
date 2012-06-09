@@ -46,14 +46,14 @@ var TextTwist = (function(w, d)
 			this.currentAnswer = []; 
 			this.answers = [];
 			this.score = 0;
-			this.timer = 120;
+			this.timer = 5;
 			
 			this.scorec.innerHTML = this.score;
 			this.ansleft.innerHTML = this.words.length;
 			this.time.innerHTML = this.timer;
 			this.avail.innerHTML = this.letters.join('');
 			
-			startTimer.call(game, this.timer, this.time, this.body);
+			startTimer.call(game, this.timer, this.time, this.body, game);
 			
 			this.lastw.addEventListener('click', function(e)
 			{
@@ -151,7 +151,7 @@ var TextTwist = (function(w, d)
 				{
 					clearInterval(_time);
 					this.body.id = "end";
-					if (getMap().response.length === getGame()+1)
+					if (this.wordmap.response.length === getGame()+1)
 					{
 						setGame(0);
 					}
@@ -196,7 +196,7 @@ var TextTwist = (function(w, d)
 		return arr;
 	}
 	
-	function startTimer(time, el, b)
+	function startTimer(time, el, b, game)
 	{
 		_time = setInterval(function()
 		{
@@ -207,9 +207,17 @@ var TextTwist = (function(w, d)
 			}
 			else
 			{
-				clearInterval(_time);	
-				el.innerHTML = "Time is up!";
-				b.id="end";
+					clearInterval(_time);
+					b.id = "end";
+					game.answers = [];
+					game.letters = [];
+					game.score = [];
+					game.currentAnswer = [];
+					game.letters = getOriginal(game.wordmap.response[game.set].letters);
+					game.ansleft.innerHTML = '';
+					game.avail.innerHTML = '';
+					game.wordscontainer.innerHTML = '';
+					alert('You lost!');	
 			}
 		}, 1000);
 	}
@@ -267,7 +275,7 @@ var TextTwist = (function(w, d)
 						response:
 						[{
 							letters:['M', 'O', 'P', 'E', 'D', 'R'], 
-							words:['MOP', 'PRE', 'REP', 'MOPE', 'DOPE', 'ROPE', 'DROP', 'PROD', 'DEMO', 'MORE', 'MOPED', 'PEDRO', 'ROMPED']
+							words:['MOP', 'PRE'] //'REP', 'MOPE', 'DOPE', 'ROPE', 'DROP', 'PROD', 'DEMO', 'MORE', 'MOPED', 'PEDRO', 'ROMPED']
 						},
 						{
 							letters:['R', 'L', 'O', 'K', 'E', 'A'], 
