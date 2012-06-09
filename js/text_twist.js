@@ -8,18 +8,6 @@ var TextTwist = (function(w, d)
 {
 	var gameNum = 0;
 	
-	
-	function getGame()
-	{
-		var g = gMap();
-		return gameNum;	
-	}
-	
-	function setGame(g)
-	{
-		gameNum = g;	
-	}
-	
 /* 	Constructor */
 	function Game(s)
 		{
@@ -41,8 +29,13 @@ var TextTwist = (function(w, d)
 			this.scorec = gId('score');
 			this.wordmap = gMap();
 			this.set = s;
+			if(this.set > this.wordmap.response.length-1)
+			{
+				gameNum = 0;
+				this.set = 0;	
+			}
 			this.letters = getOriginal(this.wordmap.response[this.set].letters);
-			this.words =  this.wordmap.response[this.set].words;
+			this.words = this.wordmap.response[this.set].words;
 			this.currentAnswer = []; 
 			this.answers = [];
 			this.score = 0;
@@ -151,14 +144,7 @@ var TextTwist = (function(w, d)
 				{
 					clearInterval(_time);
 					this.body.id = "end";
-					if (this.wordmap.response.length === getGame()+1)
-					{
-						setGame(0);
-					}
-					else
-					{
-						setGame(getGame()+1);
-					}
+					gameNum++;
 					this.answers = [];
 					this.letters = [];
 					this.score = [];
@@ -279,7 +265,7 @@ var TextTwist = (function(w, d)
 						},
 						{
 							letters:['R', 'L', 'O', 'K', 'E', 'A'], 
-							words:['EAR', 'ARE', 'EARL', 'ROLE', 'LOKE']	
+							words:['EAR', 'ARE']//, 'EARL', 'ROLE', 'LOKE']	
 						}]
 					};
 	}
@@ -297,7 +283,7 @@ var TextTwist = (function(w, d)
 		start.addEventListener('click', function(e)
 		{
 			body.id = "startgame";
-			var startGame = new Game(getGame());
+			var startGame = new Game(gameNum);
 		});		
 	});
 	
