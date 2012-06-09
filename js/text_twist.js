@@ -6,19 +6,45 @@ Michael Benin 2012
 /* 	Begin App */
 var TextTwist = (function(w, d)
 {
+	var gameNum = 0;
+	
+	function getGame()
+	{
+		return gameNum;	
+	}
+	
+	function setGame(g)
+	{
+		gameNum = g;	
+	}
 	
 /* 	Constructor */
 	function Game(s)
 		{
 			/* 	Initialize Variables */
 			var game = this;
+			this.avail = gId('avletters');
+			this.menu = gId('menu');
+			this.wordscontainer = gId('words');
+			this.answer = gId('answer');
+			this.twist = gId('twist');
+			this.enter = gId('enter');
+			this.lastw = gId('lastw');
+			this.lettersContainer = gId('letters');
+			this.time = gId('time');
+			this.score = gId('score');
 			this.wordmap = gMap();
 			this.set = s;
 			this.letters = getOriginal(this.wordmap.response[this.set].letters);
 			this.words =  this.wordmap.response[this.set].words;
 			this.currentAnswer = []; 
+			this.answers = [];
 			this.score = 0,
 			this.timer = 120;
+			
+			this.time.innerHTML = this.timer;
+			this.avail.innerHTML = this.letters.join('');
+			startTimer.call(game, this.timer, this.time);
 			
 			this.keydown = d.addEventListener('keydown', function(e)
 			{
@@ -71,19 +97,20 @@ var TextTwist = (function(w, d)
 			90:'Z'
 		};
 
-/* Private Methods */
-//map these functions	
+/* Methods */
+//todo: map these functions	in an object
 	function submitAnswer()
 	{
 		alert("submit answer function fired");
+		this.answer.innerHTML = '';
 		var index = this.words.indexOf(this.currentAnswer.join(''));
 		if (index !== -1)
 		{
-			alert("Correct Answer: "+this.currentAnswer.join(''));
+			this.answers.push(this.words[index]);
+			this.wordscontainer.innerHTML = this.answers.join(' ');
 			this.words.splice(index, 1);
 			this.letters = getOriginal(this.wordmap.response[this.set].letters);
-			alert(this.words.join(','));
-			alert(this.letters.join(','));
+			this.avail.innerHTML = this.letters.join('');
 			this.currentAnswer = [];
 		}
 		
@@ -92,11 +119,13 @@ var TextTwist = (function(w, d)
 	function addToAnswer(l)
 	{
 		this.currentAnswer.push(l);
+		this.answer.innerHTML = this.currentAnswer.join('');
 	}
 	
 	function removeLetter(l)
 	{
 		this.letters.splice(l, 1);	
+		this.avail.innerHTML = this.letters.join('');
 	}
 	
 	
@@ -113,6 +142,23 @@ var TextTwist = (function(w, d)
 			arr.push(a[i]);
 		}
 		return arr;
+	}
+	
+	function startTimer(time, el)
+	{
+		var _time = setInterval(function()
+		{
+			if(time !== 0)
+			{
+				time--;
+				el.innerHTML = time;
+			}
+			else
+			{
+				clearInterval(_time);	
+				el.innerHTML = "Time is up!";
+			}
+		}, 1000);
 	}
 	
 	function gMap()
@@ -186,25 +232,13 @@ var TextTwist = (function(w, d)
 	w.addEventListener('load', function(e)
 	{
 		var body = d.getElementsByTagName('body')[0],
-		start = gId('start'),
-		menu = gId('menu'),
-		words = gId('words'),
-		answer = gId('answer'),
-		twist = gId('twist'),
-		enter = gId('enter'),
-		lastw = gId('lastw'),
-		lettersContainer = gId('letters'),
-		time = gId('time'),
-		score = gId('score');
-		
+		start = gId('start');
 		start.addEventListener('click', function(e)
 		{
 			body.id = "startgame";
-			var startGame = new Game(0);
+			var startGame = new Game(getGame());
 		});		
 	});
-	
-	
 	
 })(window, document);
 
