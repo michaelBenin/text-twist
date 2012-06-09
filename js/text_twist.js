@@ -8,8 +8,10 @@ var TextTwist = (function(w, d)
 {
 	var gameNum = 0;
 	
+	
 	function getGame()
 	{
+		var g = gMap();
 		return gameNum;	
 	}
 	
@@ -23,6 +25,9 @@ var TextTwist = (function(w, d)
 		{
 			/* 	Initialize Variables */
 			var game = this;
+			var _time;
+			this.interval;
+			this.body = d.getElementsByTagName('body')[0];
 			this.ansleft = gId('ansleft');
 			this.avail = gId('avletters');
 			this.menu = gId('menu');
@@ -47,7 +52,8 @@ var TextTwist = (function(w, d)
 			this.ansleft.innerHTML = this.words.length;
 			this.time.innerHTML = this.timer;
 			this.avail.innerHTML = this.letters.join('');
-			startTimer.call(game, this.timer, this.time);
+			
+			startTimer.call(game, this.timer, this.time, this.body);
 			
 			this.lastw.addEventListener('click', function(e)
 			{
@@ -130,20 +136,34 @@ var TextTwist = (function(w, d)
 //todo: map these functions	in an object
 	function submitAnswer()
 	{
-		this.answer.innerHTML = '';
-		var index = this.words.indexOf(this.currentAnswer.join(''));
-		if (index !== -1)
+		if (this.currentAnswer.length !== 0)
 		{
-			this.score = this.score + (this.currentAnswer.length*Number(this.time.innerHTML));
-			this.scorec.innerHTML = this.score;
-			this.answers.push(this.words[index]);
-			this.wordscontainer.innerHTML = this.answers.join(' ');
-			this.words.splice(index, 1);
+			this.answer.innerHTML = '';
+			var index = this.words.indexOf(this.currentAnswer.join(''));
+			if (index !== -1)
+			{
+				this.score = this.score + (this.currentAnswer.length*Number(this.time.innerHTML));
+				this.scorec.innerHTML = this.score;
+				this.answers.push(this.words[index]);
+				this.wordscontainer.innerHTML = this.answers.join(' ');
+				this.words.splice(index, 1);
+				if(this.words.length === 0)
+				{
+					clearInterval(_time);
+					this.body.id = "end";
+					setGame(getGame()+1);
+					this.answers = [];
+					this.letters = [];
+					this.score = [];
+					this.wordscontainer.innerHTML = '';
+					alert('You won!');	
+				}
+			}
+			this.currentAnswer = [];
+			this.letters = getOriginal(this.wordmap.response[this.set].letters);
+			this.ansleft.innerHTML = this.words.length;
+			this.avail.innerHTML = this.letters.join('');
 		}
-		this.currentAnswer = [];
-		this.letters = getOriginal(this.wordmap.response[this.set].letters);
-		this.ansleft.innerHTML = this.words.length;
-		this.avail.innerHTML = this.letters.join('');
 	}
 	
 	function addToAnswer(l, i)
@@ -169,9 +189,9 @@ var TextTwist = (function(w, d)
 		return arr;
 	}
 	
-	function startTimer(time, el)
+	function startTimer(time, el, b)
 	{
-		var _time = setInterval(function()
+		_time = setInterval(function()
 		{
 			if(time !== 0)
 			{
@@ -182,6 +202,7 @@ var TextTwist = (function(w, d)
 			{
 				clearInterval(_time);	
 				el.innerHTML = "Time is up!";
+				b.id="end";
 			}
 		}, 1000);
 	}
@@ -242,8 +263,8 @@ var TextTwist = (function(w, d)
 							words:['MOP', 'PRE', 'REP', 'MOPE', 'DOPE', 'ROPE', 'DROP', 'PROD', 'DEMO', 'MORE', 'MOPED', 'PEDRO', 'ROMPED']
 						},
 						{
-							letters:['M', 'O', 'P', 'E', 'D', 'R'], 
-							words:["", ""]	
+							letters:['R', 'L', 'O', 'K', 'E', 'A'], 
+							words:['EAR', 'ARE', 'EARL', 'ROLE', 'LOKE']	
 						}]
 					};
 	}
