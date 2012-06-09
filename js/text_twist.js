@@ -151,7 +151,14 @@ var TextTwist = (function(w, d)
 				{
 					clearInterval(_time);
 					this.body.id = "end";
-					setGame(getGame()+1);
+					if (getMap().response.length === getGame()+1)
+					{
+						setGame(0);
+					}
+					else
+					{
+						setGame(getGame()+1);
+					}
 					this.answers = [];
 					this.letters = [];
 					this.score = [];
