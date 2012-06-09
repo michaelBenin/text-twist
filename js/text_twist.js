@@ -202,6 +202,7 @@ var TextTwist = (function(w, d)
 					game.letters = getOriginal(game.wordmap.response[game.set].letters);
 					game.ansleft.innerHTML = '';
 					game.avail.innerHTML = '';
+					game.answer.innerHTML = '';
 					game.wordscontainer.innerHTML = '';
 					alert('You lost!');	
 			}
