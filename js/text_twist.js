@@ -23,6 +23,7 @@ var TextTwist = (function(w, d)
 		{
 			/* 	Initialize Variables */
 			var game = this;
+			this.ansleft = gId('ansleft');
 			this.avail = gId('avletters');
 			this.menu = gId('menu');
 			this.wordscontainer = gId('words');
@@ -32,19 +33,53 @@ var TextTwist = (function(w, d)
 			this.lastw = gId('lastw');
 			this.lettersContainer = gId('letters');
 			this.time = gId('time');
-			this.score = gId('score');
+			this.scorec = gId('score');
 			this.wordmap = gMap();
 			this.set = s;
 			this.letters = getOriginal(this.wordmap.response[this.set].letters);
 			this.words =  this.wordmap.response[this.set].words;
 			this.currentAnswer = []; 
 			this.answers = [];
-			this.score = 0,
+			this.score = 0;
 			this.timer = 120;
 			
+			this.scorec.innerHTML = this.score;
+			this.ansleft.innerHTML = this.words.length;
 			this.time.innerHTML = this.timer;
 			this.avail.innerHTML = this.letters.join('');
 			startTimer.call(game, this.timer, this.time);
+			
+			this.lastw.addEventListener('click', function(e)
+			{
+				if(game.answers.length !== 0)
+				{
+					game.currentAnswer = [];
+					game.letters = getOriginal(game.wordmap.response[game.set].letters);
+					game.avail.innerHTML = game.letters.join('');
+					
+					var l = game.answers[game.answers.length - 1].split('');
+					
+					for (i in l)
+					{
+						var c = game.letters.indexOf(l[i]);
+						addToAnswer.call(game, l[i], c);
+					}
+				}
+	
+			});
+			
+			this.enter.addEventListener('click', function(e)
+			{
+				submitAnswer.call(game, game.currentAnswer.join(''));
+			});
+			
+			this.twist.addEventListener('click', function(e)
+			{
+				// http://jsfromhell.com/array/shuffle - Fisher-Yates, Jonas Raoni Soares Silva
+				for(var j, x, v=game.letters, i = game.letters.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
+   				 game.letters = v;
+				 game.avail.innerHTML = game.letters.join('');
+			});
 			
 			this.keydown = d.addEventListener('keydown', function(e)
 			{
@@ -52,18 +87,12 @@ var TextTwist = (function(w, d)
 				
 				if(k === 13)
 				{
-					alert("enter key fired");
 					submitAnswer.call(game, game.currentAnswer.join(''));	
 				}
 				else if (game.letters.indexOf(keys[k]) !== -1)
 				{
 					var index = game.letters.indexOf(keys[k]);
-					addToAnswer.call(game, keys[k]);
-					removeLetter.call(game, index);
-					
-					//alert("Letters left: "+game.letters.join(''));
-					//alert("Current Answer: " +game.currentAnswer.join(''));
-					
+					addToAnswer.call(game, keys[k], index);
 				}
 			});
 		}
@@ -101,33 +130,29 @@ var TextTwist = (function(w, d)
 //todo: map these functions	in an object
 	function submitAnswer()
 	{
-		alert("submit answer function fired");
 		this.answer.innerHTML = '';
 		var index = this.words.indexOf(this.currentAnswer.join(''));
 		if (index !== -1)
 		{
+			this.score = this.score + (this.currentAnswer.length*Number(this.time.innerHTML));
+			this.scorec.innerHTML = this.score;
 			this.answers.push(this.words[index]);
 			this.wordscontainer.innerHTML = this.answers.join(' ');
 			this.words.splice(index, 1);
-			this.letters = getOriginal(this.wordmap.response[this.set].letters);
-			this.avail.innerHTML = this.letters.join('');
-			this.currentAnswer = [];
 		}
-		
-	}
-	
-	function addToAnswer(l)
-	{
-		this.currentAnswer.push(l);
-		this.answer.innerHTML = this.currentAnswer.join('');
-	}
-	
-	function removeLetter(l)
-	{
-		this.letters.splice(l, 1);	
+		this.currentAnswer = [];
+		this.letters = getOriginal(this.wordmap.response[this.set].letters);
+		this.ansleft.innerHTML = this.words.length;
 		this.avail.innerHTML = this.letters.join('');
 	}
 	
+	function addToAnswer(l, i)
+	{
+		this.currentAnswer.push(l);
+		this.answer.innerHTML = this.currentAnswer.join('');
+		this.letters.splice(i, 1);	
+		this.avail.innerHTML = this.letters.join('');
+	}
 	
 	function endGame(g)
 	{
