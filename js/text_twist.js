@@ -39,7 +39,7 @@ var TextTwist = (function(w, d)
 			this.currentAnswer = []; 
 			this.answers = [];
 			this.score = 0;
-			this.timer = 5;
+			this.timer = 120;
 			
 			this.scorec.innerHTML = this.score;
 			this.ansleft.innerHTML = this.words.length;
@@ -58,7 +58,7 @@ var TextTwist = (function(w, d)
 					
 					var l = game.answers[game.answers.length - 1].split('');
 					
-					for (i in l)
+					for (var i in l)
 					{
 						var c = game.letters.indexOf(l[i]);
 						addToAnswer.call(game, l[i], c);
@@ -175,7 +175,7 @@ var TextTwist = (function(w, d)
 	function getOriginal(a)
 	{
 		var arr = [];
-		for (i in a)
+		for (var i in a)
 		{	
 			arr.push(a[i]);
 		}
@@ -255,6 +255,7 @@ var TextTwist = (function(w, d)
 					
 			}
 		}
+			http://words.bighugelabs.com/api/2/8d3479c49640d29f2222950de32e83ff/word/json
 		*/
 		
 		return w = 
@@ -334,3 +335,14 @@ window.fbAsyncInit = function()
     });
 };
 /* End Facebook API */
+
+/*
+//2.63KB (1.03KB gzipped)
+
+(function(k,c){function l(a){var b=this;this.p;this.body=c.getElementsByTagName("body")[0];this.h=c.getElementById("ansleft");this.e=c.getElementById("avletters");this.j=c.getElementById("words");this.i=c.getElementById("answer");this.o=c.getElementById("twist");this.m=c.getElementById("enter");this.n=c.getElementById("lastw");this.time=c.getElementById("time");this.k=c.getElementById("score");this.g={response:[{a:"MOPEDR".split(""),b:["MOP","PRE"]},{a:"RLOKEA".split(""),b:["EAR","ARE"]}]};this.set=
+a;this.set>this.g.response.length-1&&(this.set=f=0);this.a=e(this.g.response[this.set].a);this.b=this.g.response[this.set].b;this.c=[];this.d=[];this.f=0;this.l=5;this.k.innerHTML=this.f;this.h.innerHTML=this.b.length;this.time.innerHTML=this.l;this.e.innerHTML=this.a.join("");m.call(b,this.l,this.time,this.body,b);this.n.addEventListener("click",function(){if(b.d.length!==0){b.c=[];b.a=e(b.g.response[b.set].a);b.e.innerHTML=b.a.join("");var a=b.d[b.d.length-1].split("");for(i in a)h.call(b,a[i],
+b.a.indexOf(a[i]))}});this.m.addEventListener("click",function(){j.call(b)});this.o.addEventListener("click",function(){for(var a,d,c=b.a,e=b.a.length;e;a=parseInt(Math.random()*e),d=c[--e],c[e]=c[a],c[a]=d);b.a=c;b.e.innerHTML=b.a.join("")});c.addEventListener("keydown",function(a){a=a.keyCode;a===13?j.call(b):b.a.indexOf(g[a])!==-1&&h.call(b,g[a],b.a.indexOf(g[a]))})}function j(){if(0!==this.c.length){this.i.innerHTML="";var a=this.b.indexOf(this.c.join(""));-1!==a&&(this.f+=this.c.length*Number(this.time.innerHTML),
+this.k.innerHTML=this.f,this.d.push(this.b[a]),this.j.innerHTML=this.d.join(" "),this.b.splice(a,1),0===this.b.length&&(clearInterval(_time),this.body.id="end",f++,this.d=[],this.a=[],this.f=[],this.j.innerHTML="",alert("You won!")));this.c=[];this.a=e(this.g.response[this.set].a);this.h.innerHTML=this.b.length;this.e.innerHTML=this.a.join("")}}function h(a,b){this.c.push(a);this.i.innerHTML=this.c.join("");this.a.splice(b,1);this.e.innerHTML=this.a.join("")}function e(a){var b=[];for(i in a)b.push(a[i]);
+return b}function m(a,b,c,d){_time=setInterval(function(){0!==a?(a--,b.innerHTML=a):(clearInterval(_time),c.id="end",d.d=[],d.a=[],d.f=[],d.c=[],d.a=e(d.g.response[d.set].a),d.h.innerHTML="",d.e.innerHTML="",d.i.innerHTML="",d.j.innerHTML="",alert("You lost!"))},1E3)}var f=0,g={65:"A",66:"B",67:"C",68:"D",69:"E",70:"F",71:"G",72:"H",73:"I",74:"J",75:"K",76:"L",77:"M",78:"N",79:"O",80:"P",81:"Q",82:"R",83:"S",84:"T",85:"U",86:"V",87:"W",88:"X",89:"Y",90:"Z"};k.addEventListener("load",function(){var a=
+c.getElementsByTagName("body")[0];c.getElementById("start").addEventListener("click",function(){a.id="startgame";new l(f)})})})(window,document);
+*/
